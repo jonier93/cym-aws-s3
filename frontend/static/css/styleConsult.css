@@ -1,0 +1,15 @@
+body {
+    background-color: aqua;
+}
+
+h1, div {
+    text-align: center;
+}
+
+img {
+    height: 100px;
+}
+
+textarea {
+    height: 50px
+}
