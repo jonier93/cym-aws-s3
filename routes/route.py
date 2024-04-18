@@ -20,5 +20,4 @@ def register_user():
 
 @app.route("/consult_user", methods=["post"])
 def consult_user():
-    request_data = request.get_json()
-    return func_consult_user(request_data)
+    return func_consult_user(request.get_json())

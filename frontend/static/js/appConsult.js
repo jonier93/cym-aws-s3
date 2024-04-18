@@ -1,30 +1,22 @@
 document.querySelector("#btn-consult").addEventListener('click', consult_user)
 
 function consult_user() {
-    var obj = {
-        "id": document.getElementById("id").value
-    }
-    fetch("/consult_user", {
-        "method": "post",
-        "headers": {"Content-Type": "application/json"},
-        "body": JSON.stringify(obj)
+    let obj_data = { "id": document.getElementById("id").value }
+    fetch("/consult_user", { 
+        "method":"post",
+        "headers":{"Content-Type":"application/json"},
+        "body": JSON.stringify(obj_data)
     })
-    .then(response => response.json())
+    .then(resp => resp.json())
     .then(data => {
-        if (data.message == "OK") {
-            document.getElementById("txt-data").innerHTML = data.name + "\n" + data.lastname + "\n" + data.birthday
-            document.getElementById("image").src = "https://test-s3-jonier.s3.amazonaws.com/" + data.photo
+        if (data.status == "OK") {
+            let user = data.name + "\n" + data.lastname + "\n" + data.birthday
+            document.getElementById("txt-data").value = user
         }
         else {
-            alert("Usuario no existe")
-            document.getElementById("txt-data").innerHTML = ""
-            document.getElementById("image").src = ""
+            alert("The user doesn't exist")
+            document.getElementById("txt-data").value = ""
         }
-            
-        })
-    .catch(err => {
-        alert("error " + err)
-        document.getElementById("txt-data").value = ""
     })
 }
 

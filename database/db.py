@@ -12,14 +12,14 @@ def connectionSQL():
             user = db_user,
             password = db_passw,
             database = db_name)
-        print("Successfull connection")
+        print("Successfull connection to Database")
         return connection
     except:
         print("Error connecting to the database")
         return None
         
-def add_user():
-    instruction = "INSERT INTO users VALUES (45268, 'Jonier', 'Porras', '4/2/2000')"
+def add_user(ident, name, lastname, birthday):
+    instruction = "INSERT INTO users VALUES ("+ident+", '"+name+"', '"+lastname+"', '"+birthday+"')"
     connection = connectionSQL()
     cursor = connection.cursor()
     try:
@@ -31,16 +31,14 @@ def add_user():
     return True;
 
 def consult_user(ident):
-    instruction = "SELECT * FROM users WHERE id = " + ident
+    instruction = "SELECT * FROM users WHERE id=" + ident + ";"
     connection = connectionSQL()
     cursor = connection.cursor()
     try:
         cursor.execute(instruction)
-        result = cursor.fetchall()
-        if len(result) != 0:
-            return result
-        else:
-            return None
+        result_data = cursor.fetchall()
+        return result_data
     except:
+        print("Error consulting the data")
         return None
 

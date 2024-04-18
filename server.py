@@ -5,7 +5,7 @@ app = Flask(__name__, template_folder = "frontend/templates", static_folder = "f
 from routes.route import *
 
 if __name__ == "__main__":
-    host = "172.31.46.55"
+    host = "172.31.52.183"
     port = "80"
     app.run(host, port, debug=True)
     
