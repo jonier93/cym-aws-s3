@@ -24,7 +24,20 @@ def upload_file_s3(s3, photo_path, photo_name):
     print("File Upload")
  
 def get_file_s3(s3, ident):
-    print("")
+    bucket_name = "bucket-photos-cym"
+    bucket_repo = s3.Bucket(bucket_name)
+    all_obj = bucket_repo.objects.all()
+    path_name_file = []
+    for obj in all_obj:
+        path_name_file = obj.key
+        name_file = (path_name_file.split("/")[1]).split(".")[0]
+        if name_file == ident:
+            print("file found")
+            break
+    if len(path_name_file) != 0:
+        return path_name_file
+    else:
+        return None
 
 def func_home(): 
     return render_template("home.html")
@@ -48,13 +61,15 @@ def func_consult_user(req_data):
     ident = req_data["id"]
     result_data = consult_user(ident)
     s3 = connection_s3()
+    file_found = get_file_s3(s3, ident)
+    print(file_found)
     if len(result_data) != 0:
         resp_data = {
             'status': 'OK',
             'name': result_data[0][1],
             'lastname': result_data[0][2],
             'birthday': result_data[0][3],
-            'photo': "url"
+            'photo': file_found
         }
     else:
         resp_data = {'status': 'Error'}

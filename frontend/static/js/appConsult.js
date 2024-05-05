@@ -12,10 +12,12 @@ function consult_user() {
         if (data.status == "OK") {
             let user = data.name + "\n" + data.lastname + "\n" + data.birthday
             document.getElementById("txt-data").value = user
+            document.getElementById("img-user").src = "https://bucket-photos-cym.s3.amazonaws.com/" + data.photo
         }
         else {
             alert("The user doesn't exist")
             document.getElementById("txt-data").value = ""
+            document.getElementById("img-user").src = ""
         }
     })
 }
